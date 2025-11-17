@@ -1,11 +1,11 @@
 from rest_framework.test import APITestCase
 from rest_framework import status
 from django.urls import reverse
-from account.models import User
+from accounts.models import User
 
 class RegisterTests(APITestCase):
     def setUp(self):
-        self.url = revers('auth-register')
+        self.url = reverse('auth-register')
 
     def test_user_register_success(self):
         data = {

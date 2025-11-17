@@ -2,7 +2,7 @@
 from rest_framework.test import APITestCase
 from rest_framework import status
 from django.urls import reverse
-from accounts.models import user
+from accounts.models import User
 
 class LoginTests(APITestCase):
     def setUp(self):
