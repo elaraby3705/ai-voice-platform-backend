@@ -1,3 +1,7 @@
-from django.shortcuts import render
+# accounts/views.py
+from django.views import View
+from django.http import JsonResponse
 
-# Create your views here.
+class LogoutView(View):
+    def post(self, request):
+        return JsonResponse({'message': 'Logged out successfully'})
