@@ -44,7 +44,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Registering Project apps
+    'accounts.apps.AccountsConfig',
+    'core.apps.CoreConfig',
+    'projects.apps.ProjectsConfig',
+    'voice_sessions.apps.VoiceSessionsConfig',
 ]
+
+AUTH_USER_MODEL = "accounts.User"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
