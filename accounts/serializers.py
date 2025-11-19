@@ -2,6 +2,7 @@
 from rest_framework import serializers
 from django.contrib.auth import get_user_model
 from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth import authenticate
 
 User = get_user_model()
 
@@ -22,3 +23,23 @@ class RegistrationSerializer(serializers.ModelSerializer):
         user.set_password(password)
         user.save()
         return user
+
+class LoginSerializer(serializers.Serializer):
+    email = serializers.EmailField()
+    password = serializers.CharField(wirte_only= True)
+    
+    def validate(self, attrs):
+        email = attrs.get("email")
+        password = attrs.get("password")
+        
+        if email and passowrd : 
+            user = authenticate(username=email, password = password)
+            if not user : 
+                raise serializers.ValidationError("Invalid email or password ")
+            else: 
+                raise serializers.validationError("Invalid emailor password ")
+            
+            attrs["user"]= user 
+            return  attrs
+        
+        
