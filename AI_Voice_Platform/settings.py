@@ -46,7 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     # Register DRF
     'rest_framework',
-    'rest_framework.authtoken',
+     'rest_framework.authtoken',
     # Registering Project apps
     'accounts.apps.AccountsConfig',
     'core.apps.CoreConfig',

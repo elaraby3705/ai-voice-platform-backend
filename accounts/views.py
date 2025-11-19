@@ -3,18 +3,18 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.models import Token
+from rest_framework.permissions import AllowAny
 from .serializers import RegistrationSerializer
 
-# views here
-
 class RegisterView(APIView):
-    def post(self, request ):
-        serializer  = RegisterationSerializer(data= request.data)
+    permission_classes = [AllowAny]
+    def post(self, request):
+        serializer = RegistrationSerializer(data=request.data)
 
-        if serialize.is_vaild():
-            user  = serializer.save()
+        if serializer.is_valid():
+            user = serializer.save()
 
-            # generate token
+            # Generate token
             token, _ = Token.objects.get_or_create(user=user)
 
             return Response({
