@@ -34,17 +34,23 @@ class LoginView(APIView):
     permission_classes = [AllowAny]
 
     def post(self, request):
-        serializer = LoginSerializer(data= request.data)
-        if serializer.is_valid():
-            user = serializer.validated_data["user"]
+        email = request.data.get("email")
+        password = request.data.get("password")
+        
+        if not user: 
+            return  Response(
+                {"detail":"invalid credentials"},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        # get or create auth token 
+        token, _ = Token.objects.get_or_create(user=user)
 
-            token. _ =Token.objects.get_or_create(user=user)
-
-            return Response({
-                "user":{
-                 "id": user.id,
-                 "email":user.email,
+        return Response({
+          "user": {
+             "id": user.id,
+             "email": user.email,
             },
-            "token":token.key
-            },status= status.HTTP_200_OK)
-        return Response(serializer.errors, status = status.HTTP_400_BAD_REQUEST)
+            "token": token.key
+        }, status=status.HTTP_200_OK)
+
+# Happy coding ! 
