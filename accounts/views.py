@@ -51,7 +51,7 @@ class LoginView(APIView):
         }, status=status.HTTP_200_OK)
 
 
-class meView(APIView):
+class MeView(APIView):
     authentication_class = [TokenAuthentication]
     permission_classes  = [IsAuthenticated]
 
