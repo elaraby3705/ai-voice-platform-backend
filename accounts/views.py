@@ -3,9 +3,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.models import Token
-from rest_framework.permissions import AllowAny
-from .serializers import RegistrationSerializer
-from .serializers import LoginSerializer
+from rest_framework.authentication import TokenAuthentication
+from rest_framework.permissions import AllowAny, IsAuthenticated
+from .serializers import RegistrationSerializer ,LoginSerializer , UserSerializer
 
 class RegisterView(APIView):
     permission_classes = [AllowAny]
@@ -50,3 +50,12 @@ class LoginView(APIView):
             },
             "token": token.key
         }, status=status.HTTP_200_OK)
+
+
+class MeView(APIView):
+    authentication_class = [TokenAuthentication]
+    permission_classes  = [IsAuthenticated]
+
+    def get(self, request ):
+        serializer  = UserSerializer(request.user)
+        return  Response(serializer.data, status= 200 )
