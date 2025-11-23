@@ -1,19 +1,28 @@
-# Step 1: Base image
-FROM python:3.12-slim
+# Use official Python image
+FROM python:3.11-slim
 
-# Step 2: Set working directory
+# Set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# Set working directory
 WORKDIR /app
 
-# Step 3: Copy requirements and install
-COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# Install system dependencies
+RUN apt-get update && \
+    apt-get install -y gcc libpq-dev && \
+    rm -rf /var/lib/apt/lists/*
 
-# Step 4: Copy application code
+# Copy requirements and install
+COPY requirements.txt .
+RUN pip install --upgrade pip
+RUN pip install -r requirements.txt
+
+# Copy project files
 COPY . .
 
-# Step 5: Expose port for Cloud Run
-EXPOSE 8080
+# Expose port
+EXPOSE 8000
 
-# Step 6: Default command to run your app
-# (replace app:app with your WSGI/ASGI entrypoint)
-CMD ["gunicorn", "--bind", "0.0.0.0:8080", "app:app"]
+# Command to run the server
+CMD ["gunicorn", "AI_Voice_Platform.wsgi:application", "--bind", "0.0.0.0:8000"]
