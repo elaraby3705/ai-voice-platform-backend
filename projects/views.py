@@ -19,7 +19,7 @@ class ProjectListCreateView(generics.ListCreateAPIView):
         
         
 # get details + update + delete 
-class ProjectDetailView(generics,RetrieveUpdateDestroyAPIView):
+class ProjectDetailView(generics.RetrieveUpdateDestroyAPIView):
     serializer_class= ProjectSerializer
     permissions_classes = [permissions.IsAuthenticated, IsOwner]
     queryset = Project.objects.all()
