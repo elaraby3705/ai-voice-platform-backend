@@ -8,14 +8,14 @@ from projects.models import Project
 @pytest.mark.django_db
 def test_create_project(authenticated_user):
     client = APIClient()
-    clients.credentials(HTTP_AUTHORIZATION=f"Bearer {authenticated_user['token']}")
+    client.credentials(HTTP_AUTHORIZATION=f"Bearer {authenticated_user['token']}")
     
     payload = {
         "name": "AI Voice Project",
         "description": "Testing create project"
     }
     
-    response = client.post(reverse("projects-list"), payload)
+    response = client.post(reverse("project-list"), payload)
     
     assert response.status_code ==status.HTTP_201_CREATED
     assert project.objects.count()==1
